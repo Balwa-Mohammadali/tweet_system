@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block title %}Sign In{% endblock %}
+
+{% block content %}
+<div class="tb-form-page">
+  <div class="tb-form-card">
+    <span class="tb-form-icon">✨</span>
+    <h1 class="tb-form-title">Welcome Back</h1>
+    <p class="tb-form-sub">Sign in to your TweetBar account</p>
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}
+        <ul class="tb-errors mb-3">
+          {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+      {% for field in form %}
+        <div class="tb-field">
+          <label class="tb-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {% if field.errors %}
+            <ul class="tb-errors">
+              {% for error in field.errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+      <button type="submit" class="tb-submit">Sign In</button>
+
+      <div class="tb-form-footer">
+        Don't have an account? <a href="{% url 'register' %}">Create one</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}TweetBar{% endblock %} · TweetBar</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐦</text></svg>">
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ── Particle background ── -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- ══════════════════════════════
+       NAVBAR
+  ══════════════════════════════ -->
+  <nav class="tb-nav">
+    <a class="tb-brand" href="{% url 'tweet_list' %}">
+      <span style="font-size:26px;filter:drop-shadow(0 0 8px #1d9bf0);animation:tb-float 3s ease-in-out infinite">🐦</span>
+      TweetBar
+    </a>
+
+    <div class="tb-nav-spacer"></div>
+
+    <div class="tb-nav-actions">
+      {% if user.is_authenticated %}
+        <div class="tb-user-badge">
+          <div class="tb-avatar-sm">{{ user.username|first }}</div>
+          <span class="tb-user-name">{{ user.username }}</span>
+        </div>
+        <form action="{% url 'logout' %}" method="post" style="display:inline">
+          {% csrf_token %}
+          <button type="submit" class="tb-btn tb-btn-outline-danger">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            Logout
+          </button>
+        </form>
+      {% else %}
+        <a href="{% url 'login' %}" class="tb-btn tb-btn-outline-primary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+            <polyline points="10 17 15 12 10 7"/>
+            <line x1="15" y1="12" x2="3" y2="12"/>
+          </svg>
+          Login
+        </a>
+        <a href="{% url 'register' %}" class="tb-btn tb-btn-outline-success">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+          Register
+        </a>
+      {% endif %}
+    </div>
+  </nav>
+
+  <!-- ══════════════════════════════
+       PAGE CONTENT
+  ══════════════════════════════ -->
+  {% block content %}{% endblock %}
+
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'js/main.js' %}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+{% block title %}{% if form.instance.pk %}Edit Tweet{% else %}New Tweet{% endif %}{% endblock %}
+
+{% block content %}
+<div class="tb-compose-page">
+  <a href="{% url 'tweet_list' %}" class="tb-back-link">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+      <line x1="19" y1="12" x2="5" y2="12"></line>
+      <polyline points="12 19 5 12 12 5"></polyline>
+    </svg>
+    Back to Feed
+  </a>
+
+  <div class="tb-compose-card">
+    <h2 class="tb-compose-title">
+      {% if form.instance.pk %}
+        <span>Edit Tweet</span>
+      {% else %}
+        <span>Create Tweet</span>
+      {% endif %}
+    </h2>
+
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="tb-field">
+        <label class="tb-label" for="{{ form.text.id_for_label }}">What's happening?</label>
+        {{ form.text }}
+        {% if form.text.errors %}
+          <ul class="tb-errors">
+            {% for error in form.text.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+
+      <div class="tb-field">
+        <label class="tb-label">Attach Photo (Optional)</label>
+        <div class="tb-upload">
+          <span class="tb-upload-icon">📸</span>
+          <div class="tb-upload-text">
+            <strong>Choose an image</strong> or drag and drop here
+          </div>
+          {{ form.photo }}
+        </div>
+        <img id="tb-img-preview" alt="Preview">
+        {% if form.photo.errors %}
+          <ul class="tb-errors">
+            {% for error in form.photo.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+
+      <button type="submit" class="tb-submit">
+        {% if form.instance.pk %}Update Tweet{% else %}Publish Tweet{% endif %}
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}

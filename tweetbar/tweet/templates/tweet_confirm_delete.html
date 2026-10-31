@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}Delete Tweet{% endblock %}
+
+{% block content %}
+<div class="tb-delete-page">
+  <div class="tb-delete-card">
+    <span class="tb-delete-icon">🗑️</span>
+    <h2 class="tb-delete-title">Delete this Tweet?</h2>
+    <p class="tb-delete-subtitle">This action is permanent and cannot be undone.</p>
+
+    <div class="tb-delete-preview">
+      “{{ tweet.text }}”
+    </div>
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="tb-delete-actions">
+        <a href="{% url 'tweet_list' %}" class="tb-btn-cancel">Cancel</a>
+        <button type="submit" class="tb-btn-del">Yes, Delete</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

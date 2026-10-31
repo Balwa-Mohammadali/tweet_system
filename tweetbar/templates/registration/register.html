@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}Create Account{% endblock %}
+
+{% block content %}
+<div class="tb-form-page">
+  <div class="tb-form-card">
+    <span class="tb-form-icon">🚀</span>
+    <h1 class="tb-form-title">Join TweetBar</h1>
+    <p class="tb-form-sub">Start sharing your thoughts in seconds</p>
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}
+        <ul class="tb-errors mb-3">
+          {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+
+      {% for field in form %}
+        <div class="tb-field">
+          <label class="tb-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {% if field.help_text %}
+            <div class="tb-help">{{ field.help_text }}</div>
+          {% endif %}
+          {% if field.errors %}
+            <ul class="tb-errors">
+              {% for error in field.errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+      <button type="submit" class="tb-submit">Create Account</button>
+
+      <div class="tb-form-footer">
+        Already have an account? <a href="{% url 'login' %}">Sign in</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

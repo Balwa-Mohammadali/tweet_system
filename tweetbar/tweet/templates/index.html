@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block title %}Welcome to TweetBar{% endblock %}
+
+{% block content %}
+<div class="tb-hero">
+  <div class="tb-hero-badge">
+    <span class="tb-hero-badge-dot"></span> Next-gen microblogging experience
+  </div>
+
+  <h1 class="tb-hero-h1">
+    Share Your <span class="tb-gradient-text" id="tb-typewriter">Thoughts</span><span class="tb-hero-cursor"></span><br>
+    With The World.
+  </h1>
+
+  <p class="tb-hero-sub">
+    Connect with friends, share micro-updates, express yourself with images, and join active discussions in real time.
+  </p>
+
+  <div class="tb-hero-cta">
+    <a href="{% url 'tweet_list' %}" class="tb-hero-btn-primary">
+      <span>Explore Feed</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <line x1="5" y1="12" x2="19" y2="12"></line>
+        <polyline points="12 5 19 12 12 19"></polyline>
+      </svg>
+    </a>
+    {% if not user.is_authenticated %}
+      <a href="{% url 'register' %}" class="tb-hero-btn-secondary">
+        <span>Get Started Free</span>
+      </a>
+    {% endif %}
+  </div>
+
+  <div class="tb-hero-pills">
+    <div class="tb-pill">⚡ Fast & Responsive</div>
+    <div class="tb-pill">🎨 Modern Glass UI</div>
+    <div class="tb-pill">✨ Animated Particles</div>
+    <div class="tb-pill">🔒 Secure Auth</div>
+    <div class="tb-pill">📸 Media Support</div>
+  </div>
+</div>
+{% endblock %}

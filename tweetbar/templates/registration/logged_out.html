@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}Logged Out{% endblock %}
+
+{% block content %}
+<div class="tb-bye-page">
+  <div class="tb-bye-card">
+    <span class="tb-bye-icon">👋</span>
+    <h2 class="tb-bye-h2">You're Logged Out</h2>
+    <p class="tb-bye-p">Thanks for hanging out on TweetBar. We hope to see you back soon!</p>
+    <a href="{% url 'login' %}" class="tb-submit" style="display:inline-block; text-align:center; text-decoration:none;">
+      Log In Again
+    </a>
+  </div>
+</div>
+{% endblock %}
